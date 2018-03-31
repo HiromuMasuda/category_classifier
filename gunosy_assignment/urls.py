@@ -19,5 +19,5 @@ import classification_machine.views as classification_machine_view
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^search_form/', classification_machine_view.SearchFormView.as_view())
+    url(r'^search_form/', classification_machine_view.SearchFormView.as_view()),
 ]
