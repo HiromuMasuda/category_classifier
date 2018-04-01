@@ -17,15 +17,17 @@ class Command(BaseCommand):
         category_page_urls = [
             'https://gunosy.com/categories/1', # エンタメ
             'https://gunosy.com/categories/2', # スポーツ
-            # 'https://gunosy.com/categories/3', # おもしろ
-            # 'https://gunosy.com/categories/4', # 国内
-            # 'https://gunosy.com/categories/5', # 海外
-            # 'https://gunosy.com/categories/6', # コラム
-            # 'https://gunosy.com/categories/7', # IT・科学
-            # 'https://gunosy.com/categories/8', # グルメ
+            'https://gunosy.com/categories/3', # おもしろ
+            'https://gunosy.com/categories/4', # 国内
+            'https://gunosy.com/categories/5', # 海外
+            'https://gunosy.com/categories/6', # コラム
+            'https://gunosy.com/categories/7', # IT・科学
+            'https://gunosy.com/categories/8', # グルメ
         ]
 
         for category_page_url in category_page_urls:
+            print("Scraping starts in ", category_page_url)
+
             category = int(category_page_url[-1])
             total_pages = 5
             article_urls = []
