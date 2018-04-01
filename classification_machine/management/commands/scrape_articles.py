@@ -1,9 +1,9 @@
 from django.core.management.base import BaseCommand
 from classification_machine.models import *
 from django.utils import timezone
-import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
+import requests
 import time
 
 
@@ -60,6 +60,9 @@ class Command(BaseCommand):
                 updated_at = timezone.datetime.strptime(updated_at, '%Y-%m-%d %H:%M:%S')
                 updated_at = timezone.make_aware(updated_at, timezone.get_current_timezone())
 
-                Article.objects.create(title=title, content=content, category=category, updated_at=updated_at)
+                try:
+                    Article.objects.create(title=title, content=content, category=category, updated_at=updated_at)
+                except:
+                    pass
 
                 time.sleep(1)
