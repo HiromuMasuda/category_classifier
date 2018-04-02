@@ -61,7 +61,12 @@ class Command(BaseCommand):
                 updated_at = timezone.make_aware(updated_at, timezone.get_current_timezone())
 
                 try:
-                    Article.objects.create(title=title, content=content, category=category, updated_at=updated_at)
+                    Article.objects.create(
+                            title=title,
+                            content=content,
+                            category=category,
+                            url=article_url,
+                            updated_at=updated_at)
                 except:
                     pass
 
