@@ -14,4 +14,5 @@ class Article(models.Model):
     title = models.CharField(max_length=256)
     content = models.CharField(max_length=8192)
     category = models.IntegerField()
+    url = models.CharField(max_length=256)
     updated_at = models.DateTimeField()
