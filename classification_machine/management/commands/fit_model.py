@@ -9,7 +9,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 import pickle
 
-from classification_machine.lib.tfidf import *
+from classification_machine.modules.tfidf import *
+
+import time
 
 
 class Command(BaseCommand):
@@ -27,12 +29,19 @@ class Command(BaseCommand):
 
         train_X, test_X, train_y, test_y = \
                 train_test_split(docs, labels, test_size=0.2, random_state=0)
-        #
-        # # Make this logic from scratch.
+
+
+        # Make this logic from scratch.
         # vectorizer = TfidfVectorizer()
         # train_X = vectorizer.fit_transform(train_X)
         # test_X = vectorizer.transform(test_X)
-        #
+
+        tfidf = Tfidf()
+        train_X = tfidf.fit_transform(train_X[:10])
+        # test_X = tfidf.fit_transform(test_X[:5])
+        print(train_X)
+
+
         # # Make this logic from scratch.
         # clf = MultinomialNB(alpha=0.1, fit_prior='True')
         # clf.fit(train_X, train_y)
@@ -40,12 +49,3 @@ class Command(BaseCommand):
         # # save learned models
         # pickle.dump(clf, open('./model.sav', 'wb'))
         # pickle.dump(vectorizer, open('./vectorizer.sav', 'wb'))
-
-
-        # call example
-        tfidf = Tfidf()
-        a = tfidf.fit_transform(train_X[:5])
-        print(a)
-
-
-

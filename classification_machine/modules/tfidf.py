@@ -8,6 +8,7 @@ from janome.charfilter import UnicodeNormalizeCharFilter, RegexReplaceCharFilter
 from janome.tokenfilter import POSStopFilter
 
 import numpy as np
+from scipy import sparse
 
 
 class Tfidf:
@@ -18,8 +19,13 @@ class Tfidf:
     def fit_transform(self, docs):
         return self.tfidf(docs)
 
-    def tf(self, token, tokenized_doc):
-        return tokenized_doc.count(token)
+    # def tf(self, token, tokenized_doc):
+    #     return tokenized_doc.count(token)
+
+    def tf(self, tokenized_doc):
+        tokenized_doc = np.array(tokenized_doc)
+        unique, counts = np.unique(tokenized_doc, return_counts=True)
+        return dict(zip(unique, counts))
 
     def idf(self, tokenized_docs):
         idf_values = {}
@@ -30,19 +36,30 @@ class Tfidf:
             idf_values[token] = 1 + math.log(tokenized_docs_len/(sum(contains_token)))
         return idf_values
 
+    # def tfidf(self, docs):
+    #     tokenized_docs = [self.tokenize(doc) for doc in docs]
+    #     idf = self.idf(tokenized_docs)
+    #     tfidf_docs = []
+    #
+    #     # ここ計算がやばい、大量データに対応できない
+    #     for doc in tokenized_docs:
+    #         doc_tfidf = []
+    #         for term in idf.keys():
+    #             tf = self.tf(term, doc)
+    #             doc_tfidf.append(tf * idf[term])
+    #         tfidf_docs.append(doc_tfidf)
+    #     return tfidf_docs
+
     def tfidf(self, docs):
         tokenized_docs = [self.tokenize(doc) for doc in docs]
         idf = self.idf(tokenized_docs)
         tfidf_docs = []
 
-        # ここ計算がやばい、大量データに対応できない
         for doc in tokenized_docs:
-            doc_tfidf = []
-            for term in idf.keys():
-                tf = self.tf(term, doc)
-                doc_tfidf.append(tf * idf[term])
-            tfidf_docs.append(doc_tfidf)
-        return tfidf_docs
+            tf = self.tf(doc)
+            out = [v*tf[k] if k in tf else 0 for k, v in idf.items()]
+            tfidf_docs.append(out)
+        return sparse.lil_matrix(tfidf_docs)
 
     def tokenize(self, doc):
         tokenizer = Tokenizer()
