@@ -1,14 +1,14 @@
-# from django.core.management.base import BaseCommand
-# from classification_machine.models import *
+from django.core.management.base import BaseCommand
+from classification_machine.models import *
 
 import math
+import numpy as np
+import pandas as pd
+from scipy import sparse
 from janome.tokenizer import Tokenizer
 from janome.analyzer import Analyzer
 from janome.charfilter import UnicodeNormalizeCharFilter, RegexReplaceCharFilter
 from janome.tokenfilter import POSStopFilter
-
-import numpy as np
-from scipy import sparse
 
 
 class Tfidf:
@@ -18,9 +18,6 @@ class Tfidf:
 
     def fit_transform(self, docs):
         return self.tfidf(docs)
-
-    # def tf(self, token, tokenized_doc):
-    #     return tokenized_doc.count(token)
 
     def tf(self, tokenized_doc):
         tokenized_doc = np.array(tokenized_doc)
@@ -35,20 +32,6 @@ class Tfidf:
             contains_token = map(lambda doc: token in doc, tokenized_docs)
             idf_values[token] = 1 + math.log(tokenized_docs_len/(sum(contains_token)))
         return idf_values
-
-    # def tfidf(self, docs):
-    #     tokenized_docs = [self.tokenize(doc) for doc in docs]
-    #     idf = self.idf(tokenized_docs)
-    #     tfidf_docs = []
-    #
-    #     # ここ計算がやばい、大量データに対応できない
-    #     for doc in tokenized_docs:
-    #         doc_tfidf = []
-    #         for term in idf.keys():
-    #             tf = self.tf(term, doc)
-    #             doc_tfidf.append(tf * idf[term])
-    #         tfidf_docs.append(doc_tfidf)
-    #     return tfidf_docs
 
     def tfidf(self, docs):
         tokenized_docs = [self.tokenize(doc) for doc in docs]

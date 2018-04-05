@@ -11,8 +11,6 @@ import pickle
 
 from classification_machine.modules.tfidf import *
 
-import time
-
 
 class Command(BaseCommand):
     help = 'Fit article_classification model.'
