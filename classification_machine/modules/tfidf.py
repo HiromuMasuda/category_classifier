@@ -14,10 +14,13 @@ from janome.tokenfilter import POSStopFilter
 class Tfidf:
 
     def __init__(self):
-        pass
+        self.idf_docs_dic = {}
 
     def fit_transform(self, docs):
-        return self.tfidf(docs)
+        return self.tfidf(docs, fit=True)
+
+    def transform(self, docs):
+        return self.tfidf(docs, fit=False)
 
     def tf(self, tokenized_doc):
         tokenized_doc = np.array(tokenized_doc)
@@ -33,9 +36,13 @@ class Tfidf:
             idf_values[token] = 1 + math.log(tokenized_docs_len/(sum(contains_token)))
         return idf_values
 
-    def tfidf(self, docs):
+    def tfidf(self, docs, fit):
         tokenized_docs = [self.tokenize(doc) for doc in docs]
-        idf = self.idf(tokenized_docs)
+        if fit:
+            idf = self.idf(tokenized_docs)
+            self.idf_docs_dic = idf
+        else:
+            idf = self.idf_docs_dic
         tfidf_docs = []
 
         for doc in tokenized_docs:
