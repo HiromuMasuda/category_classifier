@@ -21,7 +21,9 @@ class SearchFormView(TemplateView):
         pattern = r"https://gunosy.com/articles/\w{5}"
         is_valid_url = re.match(pattern , url)
 
-        if is_valid_url:
+        if len(url) == 0:
+            pass
+        elif is_valid_url:
             try:
                 # gunosyの記事リンクからcontents持ってくる処理は共通化しておきたい
                 html = requests.get(url).text
@@ -32,11 +34,11 @@ class SearchFormView(TemplateView):
                 for c in contents:
                     content += c.text
 
-                vectorizer = pickle.load(open('./vectorizer.sav', 'rb'))
-                content = vectorizer.transform([content])
+                tfidf = pickle.load(open('./tfidf.sav', 'rb'))
+                content = tfidf.transform([content])
 
-                clf = pickle.load(open('./model.sav', 'rb'))
-                pred_category = clf.predict(content)
+                nb = pickle.load(open('./nb.sav', 'rb'))
+                pred_category = nb.predict(content)
 
                 # enumとi18nをうまく使いたい
                 category_list = {
@@ -49,7 +51,7 @@ class SearchFormView(TemplateView):
                     7: 'IT・科学',
                     8: 'グルメ',
                 }
-                context['category'] = category_list[pred_category[0]]
+                context['category'] = category_list[pred_category]
             except AttributeError: # 404
                 context['error_msg'] = 'ページが見つかりません。'
             except: # other errors
