@@ -1,11 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
 from classification_machine.models import *
-from janome.tokenizer import Tokenizer
-from sklearn.feature_extraction.text import TfidfVectorizer
-from bs4 import BeautifulSoup
-import requests
-import random
+from classification_machine.modules.gunosy_article_scraper import *
 import pickle
 import re
 
@@ -25,14 +21,8 @@ class SearchFormView(TemplateView):
             pass
         elif is_valid_url:
             try:
-                # gunosyの記事リンクからcontents持ってくる処理は共通化しておきたい
-                html = requests.get(url).text
-                soup = BeautifulSoup(html, "html.parser")
-
-                contents = soup.find('div', class_='article gtm-click').find_all('p')
-                content = ''
-                for c in contents:
-                    content += c.text
+                scraper = GunosyArticleScraper(article_url)
+                content = scraper.get_content
 
                 tfidf = pickle.load(open('./tfidf.sav', 'rb'))
                 content = tfidf.transform([content])
