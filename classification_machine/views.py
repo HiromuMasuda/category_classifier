@@ -51,7 +51,7 @@ class SearchFormView(TemplateView):
                     7: 'IT・科学',
                     8: 'グルメ',
                 }
-                context['category'] = category_list[pred_category]
+                context['ans_msg'] = "カテゴリは「{}」です。".format(category_list[pred_category])
             except AttributeError: # 404
                 context['error_msg'] = 'ページが見つかりません。'
             except: # other errors

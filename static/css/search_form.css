@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+}
+
+.header {
+  text-align: center;
+  background-color: #466666;
+  color: white;
+  padding: 18px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.content {
+  text-align: center;
+}
+
+.content-form {
+  padding: 80px 0 20px;
+}
+
+.content-form-input {
+  padding: 20px;
+  font-size: 18px;
+  width: 60%;
+}
+
+.ansmsg {
+  color: #466666;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.errmsg {
+  color: red;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.footer {
+  font-size: 12px;
+  text-align: center;
+  background-color: #404040;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 5px;
+}
