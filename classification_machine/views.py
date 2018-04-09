@@ -21,8 +21,8 @@ class SearchFormView(TemplateView):
             pass
         elif is_valid_url:
             try:
-                scraper = GunosyArticleScraper(article_url)
-                content = scraper.get_content
+                scraper = GunosyArticleScraper(url)
+                content = scraper.get_article_content()
 
                 tfidf = pickle.load(open('./tfidf.sav', 'rb'))
                 content = tfidf.transform([content])
@@ -42,10 +42,8 @@ class SearchFormView(TemplateView):
                     8: 'グルメ',
                 }
                 context['ans_msg'] = "カテゴリは「{}」です。".format(category_list[pred_category])
-            except AttributeError: # 404
+            except UrlInvalidError: # 404
                 context['error_msg'] = 'ページが見つかりません。'
-            except: # other errors
-                context['error_msg'] = 'エラーが発生しました。'
         else:
             context['error_msg'] = '正しい記事URLを入力してください。'
 

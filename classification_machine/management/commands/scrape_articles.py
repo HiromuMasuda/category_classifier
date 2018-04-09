@@ -15,7 +15,36 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
-        category_page_urls = [
+        for category_page_url in self.get_category_page_urls():
+            print("Scraping starts in ", category_page_url)
+
+            category = int(category_page_url[-1])
+            total_pages = 5
+            article_urls = []
+
+            for page_num in range(1, total_pages+1):
+                url = category_page_url + "?page=" + str(page_num)
+                scraper = GunosyArticleScraper(url)
+                article_urls += scraper.get_article_urls()
+                time.sleep(1)
+
+            for article_url in article_urls:
+                scraper = GunosyArticleScraper(article_url)
+
+                try:
+                    Article.objects.create(
+                            title=scraper.get_article_title(),
+                            content=scraper.get_article_content(),
+                            category=category,
+                            url=article_url,
+                            updated_at=scraper.get_article_updated_at())
+                except:
+                    pass
+
+                time.sleep(1)
+
+    def get_category_page_urls(self):
+        return [
             'https://gunosy.com/categories/1', # エンタメ
             'https://gunosy.com/categories/2', # スポーツ
             'https://gunosy.com/categories/3', # おもしろ
@@ -25,37 +54,3 @@ class Command(BaseCommand):
             'https://gunosy.com/categories/7', # IT・科学
             'https://gunosy.com/categories/8', # グルメ
         ]
-
-        for category_page_url in category_page_urls:
-            print("Scraping starts in ", category_page_url)
-
-            category = int(category_page_url[-1])
-            total_pages = 5
-            article_urls = []
-
-            for page_num in range(1, total_pages+1):
-                url = category_page_url + "?page=" + str(page_num)
-                html = requests.get(url).text
-                soup = BeautifulSoup(html, "html.parser")
-
-                list_titles = soup.find_all('div', class_="list_title")
-                for list_title in list_titles:
-                    article_url = list_title.find('a')['href']
-                    article_urls.append(article_url)
-
-                time.sleep(1)
-
-            for article_url in article_urls:
-                scraper = GunosyArticleScraper(article_url)
-
-                # try:
-                Article.objects.create(
-                        title=scraper.get_title(),
-                        content=scraper.get_content(),
-                        category=category,
-                        url=article_url,
-                        updated_at=scraper.get_updated_at())
-                # except:
-                #     pass
-
-                time.sleep(1)
