@@ -2,22 +2,14 @@ from collections import Counter
 import math
 import numpy as np
 
-"""
-P(cat|doc): proberbility of cat when doc is given.
-
-=  P(cat)P(doc|cat) / P(doc)
-=: P(cat)P(doc|cat)
-=: P(cat)ΠP(wordk|cat)
-=: logP(cat) + ΣlogP(wordk|cat)
-"""
 
 class NaiveBayes:
 
     def __init__(self):
-        self.cats         = set() # (1,2,3,4,5,6,7,8)
-        self.cat_count    = {}    # {1: 40, 2: 38, 3: 50 ...}
+        self.cats = set()  # (1,2,3,4,5,6,7,8)
+        self.cat_count = {}    # {1: 40, 2: 38, 3: 50 ...}
         self.token_scores = {}    # {1: [3.30, 1.25, 0, 0, 4.33, 0], 2: [] ...}
-        self.cat_probs    = {}
+        self.cat_probs = {}
 
     def fit(self, docs, cats):
         self.cats = set(cats)
@@ -25,7 +17,7 @@ class NaiveBayes:
 
         for c in self.cats:
             # self.token_scores
-            indexes = [i for i,cat in enumerate(cats) if cat == c]
+            indexes = [i for i, cat in enumerate(cats) if cat == c]
             cat_docs = np.array(list(docs[i] for i in indexes))
             sum_cat_docs = cat_docs.sum(axis=0)
             self.token_scores[c] = sum_cat_docs
@@ -62,7 +54,7 @@ class NaiveBayes:
         # the prob of category when doc is given
         doc_cat_sum_score = doc.multiply(self.token_scores[cat])
         doc_cat_sum_score = np.log(doc_cat_sum_score.toarray() + 1)
-        doc_cat_score     = doc_cat_sum_score.sum()
+        doc_cat_score = doc_cat_sum_score.sum()
 
         score = self.cat_probs[cat] + doc_cat_score
         return score

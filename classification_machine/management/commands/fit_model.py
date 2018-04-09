@@ -25,8 +25,8 @@ class Command(BaseCommand):
             docs.append(article.content)
             labels.append(article.category)
 
-        train_X, test_X, train_y, test_y = \
-                train_test_split(docs, labels, test_size=0.2, random_state=0)
+        train_X, test_X, train_y, test_y = train_test_split(
+                docs, labels, test_size=0.2, random_state=0)
 
         print("train_X:", len(train_X), "test_X:", len(test_X))
 
@@ -35,10 +35,10 @@ class Command(BaseCommand):
         # tfidf = TfidfVectorizer()
         time_s = time.time()
         train_X = tfidf.fit_transform(train_X)
-        test_X  = tfidf.transform(test_X)
+        test_X = tfidf.transform(test_X)
 
         time_e = time.time() - time_s
-        print("time: {}m{}s".format(int(time_e//60), int(time_e%60)))
+        print("time: {}m{}s".format(int(time_e // 60), int(time_e % 60)))
 
         # naive beyes
         nb = NaiveBayes()

@@ -45,12 +45,12 @@ class Command(BaseCommand):
 
     def get_category_page_urls(self):
         return [
-            'https://gunosy.com/categories/1', # エンタメ
-            'https://gunosy.com/categories/2', # スポーツ
-            'https://gunosy.com/categories/3', # おもしろ
-            'https://gunosy.com/categories/4', # 国内
-            'https://gunosy.com/categories/5', # 海外
-            'https://gunosy.com/categories/6', # コラム
-            'https://gunosy.com/categories/7', # IT・科学
-            'https://gunosy.com/categories/8', # グルメ
+            'https://gunosy.com/categories/1',  # エンタメ
+            'https://gunosy.com/categories/2',  # スポーツ
+            'https://gunosy.com/categories/3',  # おもしろ
+            'https://gunosy.com/categories/4',  # 国内
+            'https://gunosy.com/categories/5',  # 海外
+            'https://gunosy.com/categories/6',  # コラム
+            'https://gunosy.com/categories/7',  # IT・科学
+            'https://gunosy.com/categories/8',  # グルメ
         ]

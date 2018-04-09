@@ -40,7 +40,8 @@ class GunosyArticleScraper:
 
     def get_article_content(self):
         try:
-            contents = self.soup.find('div', class_='article gtm-click').find_all('p')
+            contents = self.soup.find(
+                    'div', class_='article gtm-click').find_all('p')
         except:
             raise UrlInvalidError("Url may not be gunosy article page one.")
 
@@ -51,11 +52,14 @@ class GunosyArticleScraper:
 
     def get_article_updated_at(self):
         try:
-            updated_at = self.soup.find('li', class_='article_header_lead_date')['content']
+            updated_at = self.soup.find(
+                    'li', class_='article_header_lead_date')['content']
         except:
             raise UrlInvalidError("Url may not be gunosy article page one.")
 
         updated_at = "{} {}".format(updated_at[:10], updated_at[11:19])
-        updated_at = timezone.datetime.strptime(updated_at, '%Y-%m-%d %H:%M:%S')
-        updated_at = timezone.make_aware(updated_at, timezone.get_current_timezone())
+        updated_at = timezone.datetime.strptime(
+                updated_at, '%Y-%m-%d %H:%M:%S')
+        updated_at = timezone.make_aware(
+                updated_at, timezone.get_current_timezone())
         return updated_at
