@@ -8,7 +8,7 @@ from scipy import sparse
 from janome.tokenizer import Tokenizer
 from janome.analyzer import Analyzer
 from janome.charfilter import UnicodeNormalizeCharFilter, RegexReplaceCharFilter
-from janome.tokenfilter import POSKeepFilter, POSStopFilter
+from janome.tokenfilter import POSKeepFilter
 
 # for debug
 import time
@@ -68,8 +68,6 @@ class Tfidf:
         return char_filters
 
     def token_filters(self):
-        # ignore_filter=['接続詞', '接頭辞', '接尾辞', '記号', '助詞', '助動詞']
-        # token_filters = [POSStopFilter(ignore_filter)]
         keep_filter=['名詞', '動詞']
         token_filters = [POSKeepFilter(keep_filter)]
         return token_filters

@@ -2,7 +2,6 @@ from django.core.management.base import BaseCommand
 from classification_machine.models import *
 from classification_machine.modules.tfidf import *
 from classification_machine.modules.naive_bayes import *
-
 from sklearn.model_selection import train_test_split
 from janome.tokenizer import Tokenizer
 import pickle
@@ -11,6 +10,7 @@ import pickle
 import time
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
+
 
 class Command(BaseCommand):
     help = 'Fit article_classification model.'
