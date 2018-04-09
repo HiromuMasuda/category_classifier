@@ -1,8 +1,24 @@
-<form action="/search_form/" method="get">
-    <label for="url">URL: </label>
-    <input id="url" type="text" name="url" value="{{ url }}">
-    <input type="submit" value="OK">
-</form>
+{% extends "base.html" %}
+{% block title %}Category Classification Machine{% endblock %}
+{% load staticfiles %}
 
-<p>カテゴリは「{{category}}」です。</p>
-<p>{{error_msg}}</p>
+{% block body %}
+  <div class="wrapper">
+    <div class="header">
+      Gunosyカテゴリ分類器
+    </div>
+
+    <div class="content">
+      <form class="content-form" action="/search_form/" method="get">
+          <input class= "content-form-input" id="url" type="text" name="url" value="{{ url }}" placeholder="Gunosyの記事URLを入れてください">
+      </form>
+
+      <p class="ansmsg">{{ans_msg}}</p>
+      <p class="errmsg">{{error_msg}}</p>
+    </div>
+
+    <div class="footer">
+      Copyright © 2018 All Rights Reserved by HiromuMasuda
+    </div>
+  </div>
+{% endblock %}
