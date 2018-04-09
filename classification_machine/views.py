@@ -5,6 +5,7 @@ from classification_machine.modules.gunosy_article_scraper import *
 import pickle
 import re
 
+
 class SearchFormView(TemplateView):
     template_name = "search_form.html"
 
@@ -15,7 +16,7 @@ class SearchFormView(TemplateView):
         context['url'] = url
 
         pattern = r"https://gunosy.com/articles/\w{5}"
-        is_valid_url = re.match(pattern , url)
+        is_valid_url = re.match(pattern, url)
 
         if len(url) == 0:
             pass
@@ -42,7 +43,7 @@ class SearchFormView(TemplateView):
                     8: 'グルメ',
                 }
                 context['ans_msg'] = "カテゴリは「{}」です。".format(category_list[pred_category])
-            except UrlInvalidError: # 404
+            except UrlInvalidError:
                 context['error_msg'] = 'ページが見つかりません。'
         else:
             context['error_msg'] = '正しい記事URLを入力してください。'
