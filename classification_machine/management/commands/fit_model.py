@@ -28,27 +28,21 @@ class Command(BaseCommand):
         train_X, test_X, train_y, test_y = \
                 train_test_split(docs, labels, test_size=0.2, random_state=0)
 
-        # tfidf : lib
-        # vectorizer = TfidfVectorizer()
-        # train_X = vectorizer.fit_transform(train_X)
-        # test_X = vectorizer.transform(test_X)
+        print("train_X:", len(train_X), "test_X:", len(test_X))
 
-        # tfidf : scratch
-        train_len, test_len = 100, 10
+        # tfidf
         tfidf = Tfidf()
-        train_X = tfidf.fit_transform(train_X[:train_len]) # takes 95% of time
-        test_X  = tfidf.transform(test_X[:test_len])
-        train_y = train_y[:train_len]
-        test_y  = train_y[:test_len]
+        # tfidf = TfidfVectorizer()
+        time_s = time.time()
+        train_X = tfidf.fit_transform(train_X)
+        test_X  = tfidf.transform(test_X)
 
-        # NaiveBayes : lib
-        # nb = MultinomialNB(alpha=0.1, fit_prior='True')
-        # nb.fit(train_X, train_y)
-        # score = nb.score(test_X, test_y)
-        # print(score)
+        time_e = time.time() - time_s
+        print("time: {}m{}s".format(int(time_e//60), int(time_e%60)))
 
-        # NaiveBayes : scratch
+        # naive beyes
         nb = NaiveBayes()
+        # nb = MultinomialNB(alpha=0.1, fit_prior='True')
         nb.fit(train_X, train_y)
         score = nb.score(test_X, test_y)
         print(score)
