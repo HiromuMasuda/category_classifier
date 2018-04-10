@@ -1,3 +1,8 @@
+"""fit_model
+Custom command for fitting stored articles to model
+command: python manage.py fit_model
+"""
+
 from django.core.management.base import BaseCommand
 from classification_machine.models import *
 from classification_machine.modules.tfidf import *

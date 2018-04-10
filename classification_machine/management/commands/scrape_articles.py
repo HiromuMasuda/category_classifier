@@ -1,3 +1,9 @@
+"""scrape_articles
+Custom command for scraping articles from gunosy
+and storing them to database
+command: python manage.py scrape_articles
+"""
+
 from django.core.management.base import BaseCommand
 from classification_machine.models import *
 from classification_machine.modules.gunosy_article_scraper import *

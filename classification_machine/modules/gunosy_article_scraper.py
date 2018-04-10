@@ -1,3 +1,7 @@
+"""scraping
+Scraping functions from gunosy
+"""
+
 from django.core.management.base import BaseCommand
 from classification_machine.models import *
 from django.utils import timezone
@@ -19,6 +23,14 @@ class GunosyArticleScraper:
         self.soup = BeautifulSoup(html, "html.parser")
 
     def get_article_urls(self):
+        """scraping article urls from gunosy cateogry page
+
+        Args:
+            None
+
+        Returns:
+            list: article urls
+        """
         article_urls = []
         try:
             list_titles = self.soup.find_all('div', class_="list_title")
@@ -31,6 +43,14 @@ class GunosyArticleScraper:
         return article_urls
 
     def get_article_title(self):
+        """scraping article title from gunosy article page
+
+        Args:
+            None
+
+        Returns:
+            str: article title
+        """
         try:
             title = self.soup.find('h1', class_='article_header_title').text
         except:
@@ -39,6 +59,14 @@ class GunosyArticleScraper:
         return title
 
     def get_article_content(self):
+        """scraping article content from gunosy article page
+
+        Args:
+            None
+
+        Returns:
+            str: article content
+        """
         try:
             contents = self.soup.find(
                     'div', class_='article gtm-click').find_all('p')
@@ -51,6 +79,14 @@ class GunosyArticleScraper:
         return content
 
     def get_article_updated_at(self):
+        """scraping article updated_at from gunosy article page
+
+        Args:
+            None
+
+        Returns:
+            datetime: article updated_at
+        """
         try:
             updated_at = self.soup.find(
                     'li', class_='article_header_lead_date')['content']
