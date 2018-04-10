@@ -42,7 +42,8 @@ class SearchFormView(TemplateView):
                     7: 'IT・科学',
                     8: 'グルメ',
                 }
-                context['ans_msg'] = "カテゴリは「{}」です。".format(category_list[pred_category])
+                out_category = category_list[pred_category]
+                context['ans_msg'] = "カテゴリは「{}」です。".format(out_category)
             except UrlInvalidError:
                 context['error_msg'] = 'ページが見つかりません。'
         else:
