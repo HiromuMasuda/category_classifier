@@ -63,3 +63,4 @@ def score(self, docs, cats):
 | DecisionTreeClassifier | 0.5 |
 
 ### 精度向上のための工夫
+
