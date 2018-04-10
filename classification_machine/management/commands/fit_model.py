@@ -33,7 +33,7 @@ class Command(BaseCommand):
         docs = []
         labels = []
         for article in Article.objects.all():
-            docs.append(article.content)
+            docs.append(article.title + " " + article.content)
             labels.append(article.category)
 
         train_X, test_X, train_y, test_y = train_test_split(
@@ -42,8 +42,8 @@ class Command(BaseCommand):
         print("train_X:", len(train_X), "test_X:", len(test_X))
 
         # tfidf
-        tfidf = Tfidf()
-        # tfidf = TfidfVectorizer()
+        # tfidf = Tfidf()
+        tfidf = TfidfVectorizer()
         train_X = tfidf.fit_transform(train_X)
         test_X = tfidf.transform(test_X)
 
