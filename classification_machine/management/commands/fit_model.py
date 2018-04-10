@@ -5,11 +5,17 @@ from classification_machine.modules.naive_bayes import *
 from sklearn.model_selection import train_test_split
 from janome.tokenizer import Tokenizer
 import pickle
-
-# for debug
 import time
+
+# classification
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC, LinearSVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import SGDClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 
 class Command(BaseCommand):
@@ -31,22 +37,33 @@ class Command(BaseCommand):
         print("train_X:", len(train_X), "test_X:", len(test_X))
 
         # tfidf
-        tfidf = Tfidf()
-        # tfidf = TfidfVectorizer()
-        time_s = time.time()
+        # tfidf = Tfidf()
+        tfidf = TfidfVectorizer()
         train_X = tfidf.fit_transform(train_X)
         test_X = tfidf.transform(test_X)
 
-        time_e = time.time() - time_s
-        print("time: {}m{}s".format(int(time_e // 60), int(time_e % 60)))
+        # classification
+        clf_models = {
+                'naive_bayes': NaiveBayes(),  # MultinomialNB(alpha=0.1, fit_prior='True')
+                'sgd': SGDClassifier(),
+                'k-neighbors': KNeighborsClassifier(),
+                'logistic-reg': LogisticRegression(),
+                'liner-svg': LinearSVC(),
+                'random_forest': RandomForestClassifier(),
+                'decision_tree': DecisionTreeClassifier()}
+        clf_scores = {}
+        best_clf = { 'score': 0, 'model': None }
 
-        # naive beyes
-        nb = NaiveBayes()
-        # nb = MultinomialNB(alpha=0.1, fit_prior='True')
-        nb.fit(train_X, train_y)
-        score = nb.score(test_X, test_y)
-        print(score)
+        for n, model in clf_models.items():
+            model.fit(train_X, train_y)
+            score = model.score(test_X, test_y)
+            clf_scores[n] = score
+            if best_clf['score'] < score:
+                best_clf = { 'score': score, 'model': model }
+
+        for k, v in clf_scores.items():
+            print("{}: {}".format(k, v))
 
         # save learned models
-        pickle.dump(nb, open('./nb.sav', 'wb'))
+        pickle.dump(best_clf['model'], open('./clf_model.sav', 'wb'))
         pickle.dump(tfidf, open('./tfidf.sav', 'wb'))

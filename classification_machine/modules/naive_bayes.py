@@ -36,13 +36,13 @@ class NaiveBayes:
             cat_scores[cat] = score
 
         pred_cat = max(cat_scores.items(), key=lambda x: x[1])[0]
-        return pred_cat
+        return [pred_cat]
 
     def score(self, docs, cats):
         acc_count = 0
         total_len = len(cats)
         for i in range(total_len):
-            pred = self.predict(docs[i])
+            pred = self.predict(docs[i])[0]
             if pred == cats[i]:
                 acc_count += 1
 
