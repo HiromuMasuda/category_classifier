@@ -1,3 +1,7 @@
+"""NaiveBayes model
+This is the NaiveBayes model made from scratch.
+"""
+
 from collections import Counter
 import math
 import numpy as np
@@ -12,6 +16,15 @@ class NaiveBayes:
         self.cat_probs = {}
 
     def fit(self, docs, cats):
+        """naivebayes model learning
+
+        Args:
+            docs (list): element must be <list> of <int>
+            cats (list): element must be <int>
+
+        Returns:
+            None
+        """
         self.cats = set(cats)
         self.cat_count = Counter(cats)
 
@@ -29,6 +42,14 @@ class NaiveBayes:
             self.cat_probs[c] = p_cat
 
     def predict(self, doc):
+        """naivebayes model prediction
+
+        Args:
+            doc (list): list of scored words(int)
+
+        Returns:
+            int: returns the predicted category
+        """
         # return the category which P(cat|doc) is the biggest
         cat_scores = {}
         for cat in self.cats:
@@ -39,6 +60,15 @@ class NaiveBayes:
         return [pred_cat]
 
     def score(self, docs, cats):
+        """naivebayes model scoreing
+
+        Args:
+            docs (list): element must be <list> of <int>
+            cats (list): element must be <int>
+
+        Returns:
+            int: returns the score of the model from 0 to 1
+        """
         acc_count = 0
         total_len = len(cats)
         for i in range(total_len):
@@ -50,8 +80,17 @@ class NaiveBayes:
         return score
 
     def get_cat_score(self, doc, cat):
-        # P(cat|doc) =: logP(cat) + ΣlogP(wordk|cat)
-        # the prob of category when doc is given
+        """getting score that doc is classified the given category
+
+        private method
+
+        Args:
+            doc (list)
+            cat (int)
+
+        Returns:
+            int: returns the score of the doc is classified the given category
+        """
         doc_cat_sum_score = doc.multiply(self.token_scores[cat])
         doc_cat_sum_score = np.log(doc_cat_sum_score.toarray() + 1)
         doc_cat_score = doc_cat_sum_score.sum()
