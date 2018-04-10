@@ -7,4 +7,5 @@ before_install:
 install:
     - pip install pep8
 script:
-    - find . -name \*.py -exec pep8 {} +
+    # - find . -name \*.py -exec pep8 {} +
+    - pep8 --show-source classification_machine/
