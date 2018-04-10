@@ -52,7 +52,7 @@ class Command(BaseCommand):
                 'my_naive_bayes': NaiveBayes(),
                 'naive_bayes': MultinomialNB(alpha=0.1, fit_prior='True'),
                 'sgd': SGDClassifier(),
-                'k-neighbors': KNeighborsClassifier(n_neighbors=8),
+                'k-neighbors': KNeighborsClassifier(),
                 'logistic-reg': LogisticRegression(),
                 'liner-svg': LinearSVC(),
                 'random_forest': RandomForestClassifier(),

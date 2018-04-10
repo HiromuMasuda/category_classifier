@@ -30,7 +30,7 @@ python manage.py runserver
 
 ## 作った分類器の精度
 
-0.75...
+0.767
 
 ### 精度の評価関数
 
@@ -53,14 +53,14 @@ def score(self, docs, cats):
 
 | 分類器 | 精度 |
 |:-----------:|:------------:|
-| NaiveBayes（自作） | 0.5 |
-| MultinomialNB | 0.5 |
-| SGDClassifier | 0.5 |
-| KNeighborsClassifier | **0.6** |
-| LogisticRegression | 0.5 |
-| LinearSVC | 0.5 |
-| RandomForestClassifier | 0.5 |
-| DecisionTreeClassifier | 0.5 |
+| NaiveBayes（自作） | 0.767 |
+| MultinomialNB | 0.846 |
+| SGDClassifier | 0.858 |
+| KNeighborsClassifier | 0.289 |
+| LogisticRegression | 0.888 |
+| LinearSVC | 0.869 |
+| RandomForestClassifier | 0.753 |
+| DecisionTreeClassifier | 0.661 |
 
 ### 精度向上のための工夫
 
