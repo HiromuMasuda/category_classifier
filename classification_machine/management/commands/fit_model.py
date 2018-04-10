@@ -42,8 +42,8 @@ class Command(BaseCommand):
         print("train_X:", len(train_X), "test_X:", len(test_X))
 
         # tfidf
-        # tfidf = Tfidf()
-        tfidf = TfidfVectorizer()
+        tfidf = Tfidf()
+        # tfidf = TfidfVectorizer()
         train_X = tfidf.fit_transform(train_X)
         test_X = tfidf.transform(test_X)
 
@@ -52,7 +52,7 @@ class Command(BaseCommand):
                 'my_naive_bayes': NaiveBayes(),
                 'naive_bayes': MultinomialNB(alpha=0.1, fit_prior='True'),
                 'sgd': SGDClassifier(),
-                'k-neighbors': KNeighborsClassifier(),
+                'k-neighbors': KNeighborsClassifier(n_neighbors=8),
                 'logistic-reg': LogisticRegression(),
                 'liner-svg': LinearSVC(),
                 'random_forest': RandomForestClassifier(),
@@ -71,5 +71,5 @@ class Command(BaseCommand):
             print("{}: {}".format(k, v))
 
         # save learned models
-        pickle.dump(best_clf['model'], open('./clf_model.sav', 'wb'))
         pickle.dump(tfidf, open('./tfidf.sav', 'wb'))
+        pickle.dump(best_clf['model'], open('./clf_model.sav', 'wb'))
