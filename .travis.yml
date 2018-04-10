@@ -2,6 +2,7 @@ language: python
 python:
   - "3.6"
 before_install:
+    - pip freeze > requirements.txt
     - pip install -r requirements.txt
 install:
     - pip install pep8
