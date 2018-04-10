@@ -44,7 +44,8 @@ class Command(BaseCommand):
 
         # classification
         clf_models = {
-                'naive_bayes': NaiveBayes(),  # MultinomialNB(alpha=0.1, fit_prior='True')
+                'my_naive_bayes': NaiveBayes(),
+                'naive_bayes': MultinomialNB(alpha=0.1, fit_prior='True'),
                 'sgd': SGDClassifier(),
                 'k-neighbors': KNeighborsClassifier(),
                 'logistic-reg': LogisticRegression(),
@@ -52,14 +53,14 @@ class Command(BaseCommand):
                 'random_forest': RandomForestClassifier(),
                 'decision_tree': DecisionTreeClassifier()}
         clf_scores = {}
-        best_clf = { 'score': 0, 'model': None }
+        best_clf = {'score': 0, 'model': None}
 
         for n, model in clf_models.items():
             model.fit(train_X, train_y)
             score = model.score(test_X, test_y)
             clf_scores[n] = score
             if best_clf['score'] < score:
-                best_clf = { 'score': score, 'model': model }
+                best_clf = {'score': score, 'model': model}
 
         for k, v in clf_scores.items():
             print("{}: {}".format(k, v))
