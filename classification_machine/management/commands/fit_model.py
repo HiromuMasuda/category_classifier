@@ -22,6 +22,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import SGDClassifier
 from sklearn.tree import DecisionTreeClassifier
 
+
 class Command(BaseCommand):
     help = 'Fit article_classification model.'
 
