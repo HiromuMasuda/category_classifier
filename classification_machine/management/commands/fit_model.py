@@ -22,7 +22,6 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import SGDClassifier
 from sklearn.tree import DecisionTreeClassifier
 
-
 class Command(BaseCommand):
     help = 'Fit article_classification model.'
 
@@ -30,9 +29,12 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
+        N = 6400
+        print("N:", N)
+
         docs = []
         labels = []
-        for article in Article.objects.all():
+        for article in Article.objects.all().order_by('?')[:N]:
             docs.append(article.title + " " + article.content)
             labels.append(article.category)
 
@@ -54,7 +56,7 @@ class Command(BaseCommand):
                 'sgd': SGDClassifier(),
                 'k-neighbors': KNeighborsClassifier(),
                 'logistic-reg': LogisticRegression(),
-                'liner-svg': LinearSVC(),
+                'liner-svm': LinearSVC(),
                 'random_forest': RandomForestClassifier(),
                 'decision_tree': DecisionTreeClassifier()}
         clf_scores = {}

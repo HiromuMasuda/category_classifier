@@ -76,4 +76,10 @@ def score(self, docs, cats):
 
 カテゴリ分類に寄与する単語は、名詞と動詞くらいではないか？という仮説より。
 
+#### 教師データ数を増やした
+基本的に多くすればするほど（データ数6400以下では）分類機の精度があがった。一方で、Tf-idfの処理時間も線型的に増えていった。
+
+<img width="75%" alt="screen shot 2018-04-14 at 22 43 09" src="https://user-images.githubusercontent.com/13075793/38768893-4e6801fc-4035-11e8-8854-ba6e8f679447.png">
+
+<img width="75%" alt="screen shot 2018-04-14 at 22 43 17" src="https://user-images.githubusercontent.com/13075793/38768894-50dba06a-4035-11e8-8f76-88280f6337ee.png">
 
