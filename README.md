@@ -54,14 +54,14 @@ def score(self, docs, cats):
 
 | 分類器 | 精度 |
 |:-----------:|:------------:|
-| NaiveBayes（自作） | 0.767 |
-| MultinomialNB | 0.846 |
-| SGDClassifier | 0.858 |
-| KNeighborsClassifier | 0.289 |
-| LogisticRegression | 0.888 |
-| LinearSVC | 0.869 |
-| RandomForestClassifier | 0.753 |
-| DecisionTreeClassifier | 0.661 |
+| NaiveBayes（自作） | 0.825 |
+| MultinomialNB | 0.893 |
+| SGDClassifier | 0.902 |
+| KNeighborsClassifier | 0.428 |
+| LogisticRegression | 0.936 |
+| LinearSVC | 0.926 |
+| RandomForestClassifier | 0.842 |
+| DecisionTreeClassifier | 0.775 |
 
 ### 精度向上のための工夫
 
@@ -79,7 +79,6 @@ def score(self, docs, cats):
 #### 教師データ数を増やした
 基本的に多くすればするほど（データ数6400以下では）分類機の精度があがった。一方で、Tf-idfの処理時間も線型的に増えていった。
 
-<img width="75%" alt="screen shot 2018-04-14 at 22 43 09" src="https://user-images.githubusercontent.com/13075793/38768893-4e6801fc-4035-11e8-8854-ba6e8f679447.png">
-
 <img width="75%" alt="screen shot 2018-04-14 at 22 43 17" src="https://user-images.githubusercontent.com/13075793/38768894-50dba06a-4035-11e8-8f76-88280f6337ee.png">
 
+<img width="75%" alt="screen shot 2018-04-14 at 22 43 09" src="https://user-images.githubusercontent.com/13075793/38768893-4e6801fc-4035-11e8-8854-ba6e8f679447.png">
