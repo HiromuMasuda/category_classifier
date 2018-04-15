@@ -8,9 +8,7 @@ from classification_machine.models import *
 from classification_machine.modules.tfidf import *
 from classification_machine.modules.naive_bayes import *
 from sklearn.model_selection import train_test_split
-from janome.tokenizer import Tokenizer
 import pickle
-import time
 
 # classification
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -30,7 +28,7 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
-        N = 6400
+        N = 800
         print("N:", N)
 
         docs = []
@@ -45,15 +43,15 @@ class Command(BaseCommand):
         print("train_X:", len(train_X), "test_X:", len(test_X))
 
         # tfidf
-        # tfidf = Tfidf()
-        tfidf = TfidfVectorizer()
+        tfidf = Tfidf()
+        # tfidf = TfidfVectorizer() # For debug
         train_X = tfidf.fit_transform(train_X)
         test_X = tfidf.transform(test_X)
 
         # classification
         clf_models = {
                 'my_naive_bayes': NaiveBayes(),
-                'naive_bayes': MultinomialNB(alpha=0.1, fit_prior='True'),
+                'naive_bayes': MultinomialNB(),
                 'sgd': SGDClassifier(),
                 'k-neighbors': KNeighborsClassifier(),
                 'logistic-reg': LogisticRegression(),

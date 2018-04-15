@@ -8,7 +8,6 @@ from django.utils import timezone
 from bs4 import BeautifulSoup
 from datetime import datetime
 import requests
-import time
 
 
 class UrlInvalidError(Exception):

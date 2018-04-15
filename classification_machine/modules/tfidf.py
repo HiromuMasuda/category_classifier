@@ -7,7 +7,6 @@ from classification_machine.models import *
 
 import math
 import numpy as np
-import pandas as pd
 import time
 from scipy import sparse
 from janome.tokenizer import Tokenizer
