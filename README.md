@@ -4,6 +4,7 @@
 
 - Python 3.6
 - Django 1.11
+- mysql 5.7.21
 
 ## 動作手順
 
@@ -30,7 +31,7 @@ python manage.py runserver
 
 ## 作った分類器の精度
 
-0.75...
+0.825
 
 ### 精度の評価関数
 
@@ -53,14 +54,34 @@ def score(self, docs, cats):
 
 | 分類器 | 精度 |
 |:-----------:|:------------:|
-| NaiveBayes（自作） | 0.5 |
-| MultinomialNB | 0.5 |
-| SGDClassifier | 0.5 |
-| KNeighborsClassifier | **0.6** |
-| LogisticRegression | 0.5 |
-| LinearSVC | 0.5 |
-| RandomForestClassifier | 0.5 |
-| DecisionTreeClassifier | 0.5 |
+| NaiveBayes（自作） | 0.825 |
+| MultinomialNB | 0.893 |
+| SGDClassifier | 0.902 |
+| KNeighborsClassifier | 0.428 |
+| LogisticRegression | 0.936 |
+| LinearSVC | 0.926 |
+| RandomForestClassifier | 0.842 |
+| DecisionTreeClassifier | 0.775 |
+
+- N: 6400, train_X: 5120, test_X: 1280
+- ハイパーパラメータ調節なし
 
 ### 精度向上のための工夫
 
+#### 記事コンテンツにタイトルを加えた
+
+- 記事コンテンツの文字数が100文字に満たない「動画はこちら...」という記事が5%ほどあった。
+- たい部分の記事においてタイトルは重要で分類に寄与する単語が入っている確率が高いという仮説
+
+以上から、文書 = タイトル + コンテンツとしたところ、精度が1%〜4%向上した。
+
+#### 文書を形態素解析する際に、名詞・動詞のみを抜き出す
+
+カテゴリ分類に寄与する単語は、名詞と動詞くらいではないか？という仮説より。
+
+#### 教師データ数を増やした
+基本的に多くすればするほど（データ数6400以下では）分類機の精度があがった。一方で、Tf-idfの処理時間も線型的に増えていった。
+
+<img width="75%" alt="screen shot 2018-04-14 at 22 43 17" src="https://user-images.githubusercontent.com/13075793/38768894-50dba06a-4035-11e8-8f76-88280f6337ee.png">
+
+<img width="75%" alt="screen shot 2018-04-14 at 22 43 09" src="https://user-images.githubusercontent.com/13075793/38768893-4e6801fc-4035-11e8-8854-ba6e8f679447.png">

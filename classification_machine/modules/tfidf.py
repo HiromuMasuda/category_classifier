@@ -88,6 +88,7 @@ class Tfidf:
         Returns:
             sparse matrix: list of tfidf scores
         """
+        time_s = time.time()
         tokenized_docs = [self.tokenize(doc) for doc in docs]
         if fit:
             idf = self.idf(tokenized_docs)
@@ -100,6 +101,10 @@ class Tfidf:
             tf = self.tf(doc)
             out = [v*tf[k] if k in tf else 0 for k, v in idf.items()]
             tfidf_docs.append(out)
+
+        time_e = time.time() - time_s
+        print("time: {}m{}s".format(int(time_e // 60), int(time_e % 60)))
+
         return sparse.lil_matrix(tfidf_docs)
 
     def tokenize(self, doc):

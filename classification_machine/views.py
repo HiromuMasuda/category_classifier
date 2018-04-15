@@ -28,8 +28,8 @@ class SearchFormView(TemplateView):
                 tfidf = pickle.load(open('./tfidf.sav', 'rb'))
                 content = tfidf.transform([content])
 
-                nb = pickle.load(open('./nb.sav', 'rb'))
-                pred_category = nb.predict(content)
+                clf_model = pickle.load(open('./clf_model.sav', 'rb'))
+                pred_category = clf_model.predict(content)
 
                 # enumとi18nをうまく使いたい
                 category_list = {
@@ -42,7 +42,7 @@ class SearchFormView(TemplateView):
                     7: 'IT・科学',
                     8: 'グルメ',
                 }
-                out_category = category_list[pred_category]
+                out_category = category_list[pred_category[0]]
                 context['ans_msg'] = "カテゴリは「{}」です。".format(out_category)
             except UrlInvalidError:
                 context['error_msg'] = 'ページが見つかりません。'
