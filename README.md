@@ -31,7 +31,7 @@ python manage.py runserver
 
 ## 作った分類器の精度
 
-0.767
+0.825
 
 ### 精度の評価関数
 
@@ -62,6 +62,9 @@ def score(self, docs, cats):
 | LinearSVC | 0.926 |
 | RandomForestClassifier | 0.842 |
 | DecisionTreeClassifier | 0.775 |
+
+- N: 6400, train_X: 5120, test_X: 1280
+- ハイパーパラメータ調節なし
 
 ### 精度向上のための工夫
 
