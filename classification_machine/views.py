@@ -31,7 +31,6 @@ class SearchFormView(TemplateView):
                 clf_model = pickle.load(open('./clf_model.sav', 'rb'))
                 pred_category = clf_model.predict(content)
 
-                # enumとi18nをうまく使いたい
                 category_list = {
                     1: 'エンタメ',
                     2: 'スポーツ',

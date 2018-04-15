@@ -8,9 +8,6 @@ from django.core.management.base import BaseCommand
 from classification_machine.models import *
 from classification_machine.modules.gunosy_article_scraper import *
 from django.utils import timezone
-from bs4 import BeautifulSoup
-from datetime import datetime
-import requests
 import time
 
 
