@@ -8,19 +8,28 @@
 
 ## 動作手順
 
-### 1. Gunosyの記事をスクレイピングし、データベースに保存。
+### 1.データベース・テーブルの作成
+
+```
+mysql> create database django_gunosy_assignment;
+```
+```
+python manage.py migrate
+```
+
+### 2. Gunosyの記事をスクレイピングし、データベースに保存。
 
 ```
 python manage.py scrape_articles
 ```
 
-### 2. モデルの学習
+### 3. モデルの学習
 
 ```
 python manage.py fit_model
 ```
 
-### 3. ローカル環境でdjangoプロジェクトを立ち上げる。
+### 4. ローカル環境でdjangoプロジェクトを立ち上げる。
 
 ```
 python manage.py runserver
