@@ -72,5 +72,5 @@ class Command(BaseCommand):
             print("{}: {}".format(k, v))
 
         # save learned models
-        pickle.dump(tfidf, open('./tfidf.sav', 'wb'))
-        pickle.dump(best_clf['model'], open('./clf_model.sav', 'wb'))
+        pickle.dump(tfidf, open(TFIDF_FILE_PATH, 'wb'))
+        pickle.dump(best_clf['model'], open(CLF_MODEL_FILE_PATH, 'wb'))

@@ -16,18 +16,40 @@ class GunosyArticleClassifier:
         self.url = url
 
     def check_url_validness(self):
-        pattern = r"%(root_url)s/articles/\w{5}" % {"root_url": GUNOSY_ROOT_URL}
-        is_valid_url = re.match(pattern, self.url)
+        """check whether input url is valid and gunosy's
 
+        Args:
+            None
+
+        Returns:
+            Boolean: is valid or not
+        """
+        pattern = r"%(url)s/articles/\w{5}" % {"url": GUNOSY_ROOT_URL}
+        is_valid_url = re.match(pattern, self.url)
         return is_valid_url
 
     def get_category_name(self):
+        """get predicted category name from url
+
+        Args:
+            None
+
+        Returns:
+            str: gunosy category name
+        """
         pred_category = self.classify()
         pred_category_name = CATEGORY_NAME_JP_DIC[pred_category[0]]
-
         return pred_category_name
 
     def classify(self):
+        """classification process of predicting category from url
+
+        Args:
+            None
+
+        Returns:
+            int: gunosy category index
+        """
         scraper = GunosyArticleScraper(self.url)
         content = scraper.get_article_content()
 
@@ -36,6 +58,4 @@ class GunosyArticleClassifier:
 
         clf_model = pickle.load(open(CLF_MODEL_FILE_PATH, 'rb'))
         pred_category = clf_model.predict(content)
-
         return pred_category
-
