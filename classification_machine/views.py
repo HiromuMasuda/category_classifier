@@ -2,47 +2,31 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
 from classification_machine.models import *
 from classification_machine.modules.gunosy_article_scraper import *
-import pickle
-import re
+from classification_machine.modules.gunosy_article_classifier import *
 
 
 class SearchFormView(TemplateView):
     template_name = "search_form.html"
+
+    def __init__(self):
+        self.tfidf = pickle.load(open(TFIDF_FILE_PATH, 'rb'))
+        self.clf_model = pickle.load(open(CLF_MODEL_FILE_PATH, 'rb'))
 
     def get(self, request, *args, **kwargs):
         context = super(SearchFormView, self).get_context_data(**kwargs)
 
         url = request.GET.get('url', '')
         context['url'] = url
-
-        pattern = r"https://gunosy.com/articles/\w{5}"
-        is_valid_url = re.match(pattern, url)
+        classifier = GunosyArticleClassifier(url)
+        is_valid_url = classifier.check_url_validness()
 
         if len(url) == 0:
             pass
         elif is_valid_url:
             try:
-                scraper = GunosyArticleScraper(url)
-                content = scraper.get_article_content()
-
-                tfidf = pickle.load(open('./tfidf.sav', 'rb'))
-                content = tfidf.transform([content])
-
-                clf_model = pickle.load(open('./clf_model.sav', 'rb'))
-                pred_category = clf_model.predict(content)
-
-                category_list = {
-                    1: 'エンタメ',
-                    2: 'スポーツ',
-                    3: 'おもしろ',
-                    4: '国内',
-                    5: '海外',
-                    6: 'コラム',
-                    7: 'IT・科学',
-                    8: 'グルメ',
-                }
-                out_category = category_list[pred_category[0]]
-                context['ans_msg'] = "カテゴリは「{}」です。".format(out_category)
+                pred_category_name = classifier.classify(
+                        self.tfidf, self.clf_model)
+                context['ans_msg'] = "カテゴリは「{}」です。".format(pred_category_name)
             except UrlInvalidError:
                 context['error_msg'] = 'ページが見つかりません。'
         else:
