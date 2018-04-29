@@ -8,6 +8,10 @@ from classification_machine.modules.gunosy_article_classifier import *
 class SearchFormView(TemplateView):
     template_name = "search_form.html"
 
+    def __init__(self):
+        self.tfidf = pickle.load(open(TFIDF_FILE_PATH, 'rb'))
+        self.clf_model = pickle.load(open(CLF_MODEL_FILE_PATH, 'rb'))
+
     def get(self, request, *args, **kwargs):
         context = super(SearchFormView, self).get_context_data(**kwargs)
 
@@ -20,7 +24,7 @@ class SearchFormView(TemplateView):
             pass
         elif is_valid_url:
             try:
-                pred_category_name = classifier.get_category_name()
+                pred_category_name = classifier.classify(self.tfidf, self.clf_model)
                 context['ans_msg'] = "カテゴリは「{}」です。".format(pred_category_name)
             except UrlInvalidError:
                 context['error_msg'] = 'ページが見つかりません。'
