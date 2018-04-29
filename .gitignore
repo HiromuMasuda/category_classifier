@@ -102,3 +102,6 @@ ENV/
 
 # gunosy_assignment custom
 *.sav
+
+# mac file
+.DS_Store
