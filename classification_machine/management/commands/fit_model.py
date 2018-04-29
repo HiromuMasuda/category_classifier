@@ -8,6 +8,7 @@ from classification_machine.models import Article
 from classification_machine.modules.tfidf import Tfidf
 from classification_machine.modules.naive_bayes import NaiveBayes
 from sklearn.model_selection import train_test_split
+from classification_machine.static import consts
 import pickle
 
 # classification
@@ -73,5 +74,5 @@ class Command(BaseCommand):
             print("{}: {}".format(k, v))
 
         # save learned models
-        pickle.dump(tfidf, open(TFIDF_FILE_PATH, 'wb'))
-        pickle.dump(best_clf['model'], open(CLF_MODEL_FILE_PATH, 'wb'))
+        pickle.dump(tfidf, open(consts.TFIDF_FILE_PATH, 'wb'))
+        pickle.dump(best_clf['model'], open(consts.CLF_MODEL_FILE_PATH, 'wb'))

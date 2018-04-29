@@ -7,6 +7,7 @@ from classification_machine.modules.gunosy_article_scraper import (
 from classification_machine.modules.gunosy_article_classifier import (
         GunosyArticleClassifier
         )
+from classification_machine.static import consts
 import pickle
 import re
 
@@ -15,8 +16,8 @@ class SearchFormView(TemplateView):
     template_name = "search_form.html"
 
     def __init__(self):
-        self.tfidf = pickle.load(open(TFIDF_FILE_PATH, 'rb'))
-        self.clf_model = pickle.load(open(CLF_MODEL_FILE_PATH, 'rb'))
+        self.tfidf = pickle.load(open(consts.TFIDF_FILE_PATH, 'rb'))
+        self.clf_model = pickle.load(open(consts.CLF_MODEL_FILE_PATH, 'rb'))
 
     def get(self, request, *args, **kwargs):
         context = super(SearchFormView, self).get_context_data(**kwargs)

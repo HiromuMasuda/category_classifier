@@ -9,6 +9,7 @@ from classification_machine.models import Article
 from classification_machine.modules.gunosy_article_scraper import (
         GunosyArticleScraper
         )
+from classification_machine.static import consts
 from django.utils import timezone
 from urllib.parse import urlencode
 import time
@@ -21,16 +22,8 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
-        category_page_urls = [
-            'https://gunosy.com/categories/1',  # エンタメ
-            'https://gunosy.com/categories/2',  # スポーツ
-            'https://gunosy.com/categories/3',  # おもしろ
-            'https://gunosy.com/categories/4',  # 国内
-            'https://gunosy.com/categories/5',  # 海外
-            'https://gunosy.com/categories/6',  # コラム
-            'https://gunosy.com/categories/7',  # IT・科学
-            'https://gunosy.com/categories/8',  # グルメ
-        ]
+        category_page_urls = \
+                [val['url'] for val in consts.GUNOSY_CATEGORIES_DICT.values()]
         TOTAL_PAGES = 5
 
         for category_page_url in category_page_urls:
