@@ -4,14 +4,13 @@ command: python manage.py fit_model
 """
 
 from django.core.management.base import BaseCommand
-from classification_machine.models import *
-from classification_machine.modules.tfidf import *
-from classification_machine.modules.naive_bayes import *
+from classification_machine.models import Article
+from classification_machine.modules.tfidf import Tfidf
+from classification_machine.modules.naive_bayes import NaiveBayes
 from sklearn.model_selection import train_test_split
 import pickle
 
 # classification
-from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC, LinearSVC
@@ -44,7 +43,6 @@ class Command(BaseCommand):
 
         # tfidf
         tfidf = Tfidf()
-        # tfidf = TfidfVectorizer() # For debug
         train_X = tfidf.fit_transform(train_X)
         test_X = tfidf.transform(test_X)
 

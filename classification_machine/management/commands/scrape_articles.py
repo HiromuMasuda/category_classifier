@@ -5,8 +5,8 @@ command: python manage.py scrape_articles
 """
 
 from django.core.management.base import BaseCommand
-from classification_machine.models import *
-from classification_machine.modules.gunosy_article_scraper import *
+from classification_machine.models import Article
+from classification_machine.modules.gunosy_article_scraper import GunosyArticleScraper
 from django.utils import timezone
 import time
 
