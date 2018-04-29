@@ -1,6 +1,6 @@
 """fit_model
 Custom command for fitting stored articles to model
-command: python manage.py fit_model
+command: python manage.py fit_model [data_N]
 """
 
 from django.core.management.base import BaseCommand
@@ -24,10 +24,13 @@ class Command(BaseCommand):
     help = 'Fit article_classification model.'
 
     def add_arguments(self, parser):
-        pass
+        parser.add_argument('data_N', nargs='?', type=int)
 
     def handle(self, *args, **options):
-        N = 100
+        if options['data_N']:
+            N = options['data_N']
+        else:
+            N = Article.objects.all().count()
         print("N:", N)
 
         docs = []
