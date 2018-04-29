@@ -8,6 +8,7 @@ from django.core.management.base import BaseCommand
 from classification_machine.models import *
 from classification_machine.modules.gunosy_article_scraper import *
 from django.utils import timezone
+from urllib.parse import urlencode
 import time
 
 
@@ -37,7 +38,8 @@ class Command(BaseCommand):
             article_urls = []
 
             for page_num in range(1, TOTAL_PAGES+1):
-                url = category_page_url + "?page=" + str(page_num)
+                url = "{}?{}".format(
+                        category_page_url, urlencode({'page': str(page_num)}))
                 scraper = GunosyArticleScraper(url)
                 article_urls += scraper.get_article_urls()
                 time.sleep(1)
