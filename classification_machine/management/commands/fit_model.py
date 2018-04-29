@@ -28,7 +28,7 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
-        N = 800
+        N = 100
         print("N:", N)
 
         docs = []
@@ -61,10 +61,10 @@ class Command(BaseCommand):
         clf_scores = {}
         best_clf = {'score': 0, 'model': None}
 
-        for n, model in clf_models.items():
+        for name, model in clf_models.items():
             model.fit(train_X, train_y)
             score = model.score(test_X, test_y)
-            clf_scores[n] = score
+            clf_scores[name] = score
             if best_clf['score'] < score:
                 best_clf = {'score': score, 'model': model}
 
