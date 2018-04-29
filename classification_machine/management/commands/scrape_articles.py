@@ -54,7 +54,7 @@ class Command(BaseCommand):
                             category=category,
                             url=article_url,
                             updated_at=scraper.get_article_updated_at())
-                except:
-                    pass
+                except Exception as e:
+                    print(type(e).__name__, e)
 
                 time.sleep(1)
