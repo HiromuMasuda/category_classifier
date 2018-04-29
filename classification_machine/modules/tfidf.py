@@ -3,7 +3,6 @@ This is the tf-idf model made from scratch.
 """
 
 from django.core.management.base import BaseCommand
-from classification_machine.models import *
 
 import math
 import numpy as np

@@ -1,17 +1,16 @@
 """fit_model
 Custom command for fitting stored articles to model
-command: python manage.py fit_model
+command: python manage.py fit_model [data_N]
 """
 
 from django.core.management.base import BaseCommand
-from classification_machine.models import *
-from classification_machine.modules.tfidf import *
-from classification_machine.modules.naive_bayes import *
+from classification_machine.models import Article
+from classification_machine.modules.tfidf import Tfidf
+from classification_machine.modules.naive_bayes import NaiveBayes
 from sklearn.model_selection import train_test_split
 import pickle
 
 # classification
-from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC, LinearSVC
@@ -25,10 +24,13 @@ class Command(BaseCommand):
     help = 'Fit article_classification model.'
 
     def add_arguments(self, parser):
-        pass
+        parser.add_argument('data_N', nargs='?', type=int)
 
     def handle(self, *args, **options):
-        N = 800
+        if options['data_N']:
+            N = options['data_N']
+        else:
+            N = Article.objects.all().count()
         print("N:", N)
 
         docs = []
@@ -44,7 +46,6 @@ class Command(BaseCommand):
 
         # tfidf
         tfidf = Tfidf()
-        # tfidf = TfidfVectorizer() # For debug
         train_X = tfidf.fit_transform(train_X)
         test_X = tfidf.transform(test_X)
 
@@ -61,10 +62,10 @@ class Command(BaseCommand):
         clf_scores = {}
         best_clf = {'score': 0, 'model': None}
 
-        for n, model in clf_models.items():
+        for name, model in clf_models.items():
             model.fit(train_X, train_y)
             score = model.score(test_X, test_y)
-            clf_scores[n] = score
+            clf_scores[name] = score
             if best_clf['score'] < score:
                 best_clf = {'score': score, 'model': model}
 

@@ -1,8 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
-from classification_machine.models import *
-from classification_machine.modules.gunosy_article_scraper import *
-from classification_machine.modules.gunosy_article_classifier import *
+from classification_machine.models import Article
+from classification_machine.modules.gunosy_article_scraper import (
+        GunosyArticleScraper
+        )
+from classification_machine.modules.gunosy_article_classifier import (
+        GunosyArticleClassifier
+        )
+import pickle
+import re
 
 
 class SearchFormView(TemplateView):
