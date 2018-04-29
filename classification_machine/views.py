@@ -24,7 +24,8 @@ class SearchFormView(TemplateView):
             pass
         elif is_valid_url:
             try:
-                pred_category_name = classifier.classify(self.tfidf, self.clf_model)
+                pred_category_name = classifier.classify(
+                        self.tfidf, self.clf_model)
                 context['ans_msg'] = "カテゴリは「{}」です。".format(pred_category_name)
             except UrlInvalidError:
                 context['error_msg'] = 'ページが見つかりません。'
