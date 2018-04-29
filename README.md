@@ -25,9 +25,12 @@ python manage.py scrape_articles
 
 ### 3. モデルの学習
 
+パラメータdata_Nを渡せばモデルの学習・検証に使うデータ数の指定が可能。
+
 ```
-python manage.py fit_model
+python manage.py fit_model [data_N]
 ```
+
 
 ### 4. ローカル環境でdjangoプロジェクトを立ち上げる。
 
