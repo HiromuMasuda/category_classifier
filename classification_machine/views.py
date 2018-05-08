@@ -16,8 +16,10 @@ class SearchFormView(TemplateView):
     template_name = "search_form.html"
 
     def __init__(self):
-        self.tfidf = pickle.load(open(consts.TFIDF_FILE_PATH, 'rb'))
-        self.clf_model = pickle.load(open(consts.CLF_MODEL_FILE_PATH, 'rb'))
+        with open(consts.TFIDF_FILE_PATH, 'rb') as f:
+            self.tfidf = pickle.load(f)
+        with open(consts.CLF_MODEL_FILE_PATH, 'rb') as f:
+            self.clf_model = pickle.load(f)
 
     def get(self, request, *args, **kwargs):
         context = super(SearchFormView, self).get_context_data(**kwargs)
