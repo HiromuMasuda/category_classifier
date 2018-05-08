@@ -14,6 +14,9 @@ from django.utils import timezone
 from urllib.parse import urlencode
 import time
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 class Command(BaseCommand):
     help = 'Scraping article contents from Gunosy.'
@@ -50,6 +53,6 @@ class Command(BaseCommand):
                             url=article_url,
                             updated_at=scraper.get_article_updated_at())
                 except Exception as e:
-                    print(type(e).__name__, e)
+                    logger.warning(type(e).__name__, e)
 
                 time.sleep(1)
